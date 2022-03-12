@@ -1,0 +1,18 @@
+.App {
+  text-align: center;
+}
+
+ul#links li {
+  display:inline;
+  list-style-type: none;
+  padding-left: 15px;
+}
+
+#footer {
+  padding-top: 20px;
+  color:brown;
+}
+
+.header {
+  color: brown;
+}
