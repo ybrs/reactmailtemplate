@@ -1,11 +1,65 @@
-###
+# React mail templates
 
 This is a basic example of how to render html from react for sending emails.
 
 This setup includes: 
 - react, react-dom
-- juice - for css rendering for emails
+- juice - for inlining css for emails
 - wouter - for routing
+
+# Why ?
+
+You start a project and just like many modern website's architecture, you split Frontend and Backend.
+
+Backend serves an api and Frontend completely isolated from the backend, calls api endpoints and renders on the client side.
+
+Backend developers doesn't need to understand anything from frontend. Frontend developers doesn't really care how backend works. You develop your product, website.... And then you realize that you need to send emails.
+
+There are several roads you can choose from, 
+
+## Rendering emails on backend
+
+Backend team tries to figure out how to send emails. Sending email is actually a backend task anyways. So they try to develop html templates, rendering and sending on the backend side in their favorite framework. If backend rendering comes out of the box (for example on django) then they try to deal with htmls, templates etc. and hope the emails will look ok.
+
+Next step is usually onboarding frontend developers to "django's" templating system so that they fix all the styling.
+
+Then you find a hosted saas that gives you an api or smtp service and send mails from there.
+
+Whenever your marketing team wants changes everyone in the team starts moving their eyebrows.
+
+## Rendering emails on a SAAS company completely
+
+You start seeking for an transactional email service provider (eg: sendgrid), you realize that they use some other templating language totally unrelated to your react/jsx framework https://docs.sendgrid.com/for-developers/sending-email/using-handlebars you ask frontend developers to deal with it. 
+
+## Using server-side rendering 
+
+You use nextjs or chrome's renderer (or anything similar) and figure out rendering react on the server side - so that frontend developers won't have to deal with different languages/frameworks.
+
+This project is an attempt to provide some guidance for this path.
+
+
+# How it works ?
+
+React has `ReactDOMServer.renderToStaticMarkup` to render to html. So what we do is, create a react element (`React.createElement`) and then give it to renderToStaticMarkup. Get the output from there and put it in a layout.
+
+Then `juice` will inline the css in that html. You know you can't use external css files in email templates. Juice inlines them.
+
+We build an api endpoint around that. We get some json data and pass it as props to createElement.
+
+So say you want to send a welcome email, after a user signs up on your website. Your backend service will handle the call, register the user and then will do a post call to this server with some contextual data.    
+
+```
+http -v POST http://mailserver:8887/mail/mail_beginner_user username=foobar
+```
+
+Get the html output from there and send it to your favorite transactional email provider.
+
+# 
+
+Your frontend developers can keep using react as usual for email templates too. There might even be a chance to re-use some of the components from the website/application.
+
+Your backend developers doesn't need to know at all about all this rendering. They call an endpoint to get the mail
+
 
 # Install and run
 
