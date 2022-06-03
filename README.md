@@ -9,31 +9,31 @@ This setup includes:
 
 # Why ?
 
-You start a project and just like many modern website's architecture, you split Frontend and Backend.
+You start a project and just like any modern website's architecture, you split Frontend and Backend.
 
 Backend serves an api and Frontend completely isolated from the backend, calls api endpoints and renders on the client side.
 
-Backend developers doesn't need to understand anything from frontend. Frontend developers doesn't really care how backend works. You develop your product, website.... And then you realize that you need to send emails.
+Backend developers doesn't need to understand anything from frontend. Frontend developers doesn't really care how backend works. You develop your product, website.... Voila... Everything looks great, teams have great autonomy... And then you realize that you need to send emails.
 
-There are several roads you can choose from, 
+There are several paths you can take:
 
 ## Rendering emails on backend
 
-Backend team tries to figure out how to send emails. Sending email is actually a backend task anyways. So they try to develop html templates, rendering and sending on the backend side in their favorite framework. If backend rendering comes out of the box (for example on django) then they try to deal with htmls, templates etc. and hope the emails will look ok.
+Backend team tries to figure out how to render and send emails. Sending email is actually a backend task right ? So they try to develop mail templates, rendering and sending on the backend side in their favorite framework. If backend rendering comes out of the box (for example in django) then they try to deal with htmls, templates etc. and hope the emails will look ok.
 
 Next step is usually onboarding frontend developers to "django's" templating system so that they fix all the styling.
 
-Then you find a hosted saas that gives you an api or smtp service and send mails from there.
+Then you find a hosted saas that gives you an api or smtp service and send mails.
 
 Whenever your marketing team wants changes everyone in the team starts moving their eyebrows.
 
-## Rendering emails on a SAAS company completely
+## Using a vendor (Rendering emails with a SAAS company)
 
-You start seeking for an transactional email service provider (eg: sendgrid), you realize that they use some other templating language totally unrelated to your react/jsx framework https://docs.sendgrid.com/for-developers/sending-email/using-handlebars you ask frontend developers to deal with it. 
+You start seeking for an transactional email service provider (eg: sendgrid), you realize that they use some other templating language totally unrelated to your react/jsx framework https://docs.sendgrid.com/for-developers/sending-email/using-handlebars. You ask frontend developers to deal with it. They learn the language and somehow magically integrate their github flow (or their development flow) with that Saas.
 
 ## Using server-side rendering 
 
-You use nextjs or chrome's renderer (or anything similar) and figure out rendering react on the server side - so that frontend developers won't have to deal with different languages/frameworks.
+You use nextjs or chrome's renderer (or anything in that space) and figure out rendering react on the server side - so that frontend developers won't have to deal with different languages/frameworks.
 
 This project is an attempt to provide some guidance for this path.
 
@@ -54,11 +54,20 @@ http -v POST http://mailserver:8887/mail/mail_beginner_user username=foobar
 
 Get the html output from there and send it to your favorite transactional email provider.
 
-# 
+Let's put this into a diagram.
+
+![System Diagram](./reactmailtemplate.drawio.png)
+
+
+# End of story ?
 
 Your frontend developers can keep using react as usual for email templates too. There might even be a chance to re-use some of the components from the website/application.
 
-Your backend developers doesn't need to know at all about all this rendering. They call an endpoint to get the mail
+Your backend developers doesn't need to know at all about all this rendering. They call an endpoint to get the rendered mail.
+
+You can even extend this setup a bit more so that if marketing needs some changes they can do it. Maybe utilizing a CMS. 
+
+The trade-off, you complicate your setup a bit.
 
 
 # Install and run
